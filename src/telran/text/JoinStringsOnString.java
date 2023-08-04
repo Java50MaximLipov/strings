@@ -13,4 +13,5 @@ public class JoinStringsOnString implements JoinStrings {
 		}
 		return res;
 	}
+
 }

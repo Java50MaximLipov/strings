@@ -5,29 +5,31 @@ import java.util.Arrays;
 import telran.text.*;
 
 public class JoinStringsPerformanceAppl {
-
 	private static final int N_STRINGS = 1000;
 	private static final int N_RUNS = 1000;
 
 	public static void main(String[] args) {
-		var onString = new JoinStringsOnString();
-		var onBuilder = new JoinStringsOnBuilder();
-		var onStandard = new JoinStringsOnStandard();
-		String[] strings = getBigArray();
-		var onStringTest = new JoinStringsPerformanceTest("JoinStringsOnStringImplTest", N_RUNS, strings, onString);
-		var onBuilderTest = new JoinStringsPerformanceTest("JoinStringsBuilderImplTest", N_RUNS, strings, onBuilder);
-		var onStandardTest = new JoinStringsPerformanceTest("JoinStringsOnStandardImplTest", N_RUNS, strings,
-				onStandard);
-
-		onStringTest.run();
+		String[] strings = getStrings();
+		PerformanceTest onBuilderTest = getTest("JoinStringsOnBuilder", strings, new JoinStringsOnBuilder());
+		PerformanceTest onStandardTest = getTest("JoinStringsOnStandard", strings, new JoinStringsOnStandard());
+		PerformanceTest onStringTest = getTest("JoinStringsOnString", strings, new JoinStringsOnString());
 		onBuilderTest.run();
 		onStandardTest.run();
+		onStringTest.run();
 	}
 
-	private static String[] getBigArray() {
+	private static PerformanceTest getTest(String className, String[] strings, JoinStrings joinStrings) {
+		String testName = getTestName(className);
+		return new JoinStringsPerformanceTest(testName, N_RUNS, strings, joinStrings);
+	}
+
+	private static String getTestName(String className) {
+		return String.format("%s; Number of the strings is %d", className, N_STRINGS);
+	}
+
+	private static String[] getStrings() {
 		String[] res = new String[N_STRINGS];
-		Arrays.fill(res, "Don't Panic!");
+		Arrays.fill(res, "string");
 		return res;
 	}
-
 }

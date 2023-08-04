@@ -9,10 +9,10 @@ public class JoinStringsOnBuilder implements JoinStrings {
 			StringBuilder builder = new StringBuilder(strings[0]);
 			for (int i = 1; i < strings.length; i++) {
 				builder.append(delimiter).append(strings[i]);
-
 			}
 			res = builder.toString();
 		}
 		return res;
 	}
+
 }
