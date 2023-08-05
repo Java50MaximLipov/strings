@@ -18,4 +18,21 @@ public class Strings {
 		String octet = ipV4Octet();
 		return String.format("%1$s(\\.%1$s){3}", octet);
 	}
+
+//	HW-21
+	static public String arithmeticExpression() {
+		String operand = operand();
+		String operator = operator();
+//		return String.format("%1$s(?:%2$s%1$s)*", operand, operator);
+		return String.format("%1$s(?:%2$s%1$s)*", operand, operator);
+	}
+
+	static private String operand() {
+//		return "\\s?((\\d*(?:\\.\\d*)?)|([a-zA-Z$][\\w$]*|_[\\w$]+))\\s?";
+		return "\\s?((\\d*(?:\\.\\d*)?)|([a-zA-Z$][\\w$]*|_[\\w$]+))\\s?";
+	}
+
+	static private String operator() {
+		return "[+\\-*/]";
+	}
 }
