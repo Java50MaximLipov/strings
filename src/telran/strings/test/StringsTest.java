@@ -3,7 +3,6 @@ package telran.strings.test;
 import static org.junit.jupiter.api.Assertions.*;
 import static telran.strings.Strings.*;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class StringsTest {
@@ -108,15 +107,14 @@ class StringsTest {
 		assertFalse("1 2.3.4".matches(regex));
 	}
 
-//	HW-21
 	@Test
 	void arithmeticExpressionTrueTest() {
 		String regex = arithmeticExpression();
 		assertTrue("1.5 + a/2*10 -21".matches(regex));
 		assertTrue(" .5 + $/2* 10.0 /21.1234".matches(regex));
-		assertTrue("5. + __/2* 0.0 /0 ".matches(regex));
+		assertTrue("5. + __/2* 0.0 /0  ".matches(regex));
 		assertTrue("25.".matches(regex));
-		assertTrue(" aA123 ".matches(regex));
+		assertTrue("   aA123   ".matches(regex));
 	}
 
 	@Test

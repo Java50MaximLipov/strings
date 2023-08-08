@@ -2,6 +2,7 @@ package telran.strings;
 
 public class Strings {
 	static public String javaVariable() {
+
 		return "[a-zA-Z$][\\w$]*|_[\\w$]+";
 	}
 
@@ -19,20 +20,23 @@ public class Strings {
 		return String.format("%1$s(\\.%1$s){3}", octet);
 	}
 
-//	HW-21
-	static public String arithmeticExpression() {
-		String operand = operand();
-		String operator = operator();
-//		return String.format("%1$s(?:%2$s%1$s)*", operand, operator);
-		return String.format("%1$s(?:%2$s%1$s)*", operand, operator);
+	public static String arithmeticExpression() {
+		String operandRE = operand();
+		String operatorRE = operator();
+		return String.format("%1$s(%2$s%1$s)*", operandRE, operatorRE);
 	}
 
-	static private String operand() {
-//		return "\\s?((\\d*(?:\\.\\d*)?)|([a-zA-Z$][\\w$]*|_[\\w$]+))\\s?";
-		return "\\s?((\\d*(?:\\.\\d*)?)|([a-zA-Z$][\\w$]*|_[\\w$]+))\\s?";
+	public static String operator() {
+		return "([-+*/])";
 	}
 
-	static private String operator() {
-		return "[+\\-*/]";
+	private static String operand() {
+		String numberExp = numberExp();
+		String variableExp = javaVariable();
+		return String.format("\\s*((%s|%s))\\s*", numberExp, variableExp);
+	}
+
+	private static String numberExp() {
+		return "(\\d+\\.?\\d*|\\.\\d+)";
 	}
 }
