@@ -98,12 +98,16 @@ public class Strings {
 		return res;
 	}
 
+//	HW-22
 	private static double getValue(String operand, Map<String, Double> variableValues) {
-		// TODO
-		double res; // if operand is number then res will be Double.parseDouble(operand) otherwise
-					// the value should be got from the map
-		// if the operand is a variable and a value doesn't exist in the map the
-		// IllegalArgumentException should be thrown
-		return 0;
+		double res;
+		if (operand.matches(numberExp())) {
+			res = Double.parseDouble(operand);
+		} else if (variableValues.containsKey(operand)) {
+			res = variableValues.get(operand);
+		} else {
+			throw new IllegalArgumentException(VARIABLE_NOT_DEFINED);
+		}
+		return res;
 	}
 }
