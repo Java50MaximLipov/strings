@@ -3,8 +3,6 @@ package telran.strings.test;
 import static org.junit.jupiter.api.Assertions.*;
 import static telran.strings.Strings.*;
 
-import java.util.function.BooleanSupplier;
-
 import org.junit.jupiter.api.Test;
 
 class StringsTest {
@@ -134,8 +132,8 @@ class StringsTest {
 	void isArithmeticExpressionTrueTest() {
 		assertTrue(isArithmeticExpression("(a + (b /2) ) * 100"));
 		assertTrue(isArithmeticExpression("(a + ((b /2)  * 100)- 10 )"));
-		assertTrue(isArithmeticExpression(" (a + ( b /2 ) ) * 100"));
-		assertTrue(isArithmeticExpression("( a + ( (b /2 )  * 100  )- 10)"));
+		assertTrue(isArithmeticExpression(" (a + ( b /2 )) * 100"));
+		assertTrue(isArithmeticExpression("( a +  ( (b /2 )  * 100  )- 10)"));
 	}
 
 	@Test
