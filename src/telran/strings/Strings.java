@@ -98,14 +98,11 @@ public class Strings {
 		return res;
 	}
 
-//	HW-22
+//@SuppressWarnings("unused")
 	private static double getValue(String operand, Map<String, Double> variableValues) {
-		double res;
-		if (operand.matches(numberExp())) {
-			res = Double.parseDouble(operand);
-		} else if (variableValues.containsKey(operand)) {
-			res = variableValues.get(operand);
-		} else {
+		double res = operand.matches(numberExp()) ? Double.parseDouble(operand)
+				: variableValues.getOrDefault(operand, Double.NaN);
+		if (Double.isNaN(res)) {
 			throw new IllegalArgumentException(VARIABLE_NOT_DEFINED);
 		}
 		return res;

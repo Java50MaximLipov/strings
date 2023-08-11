@@ -2,9 +2,9 @@ package telran.strings.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static telran.strings.Strings.*;
+
 import java.util.*;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class StringsTest {
@@ -146,37 +146,18 @@ class StringsTest {
 		assertFalse(isArithmeticExpression(" a) + ( (b /2 )  * 100  )- 10)"));
 	}
 
-//	HW-22
 	@Test
-	void calculationLegalTest() {
-		Map<String, Double> variableValues = new HashMap<>();
-		variableValues.put("a", 5.0);
-		variableValues.put("b", 10.0);
-		variableValues.put("simpleDouble", 2.0);
-		variableValues.put("c0mpl3xDouble", 4.0);
-		variableValues.put("_$c0mpl3xDouble", 1.0);
-		assertEquals(150.0, calculation("a + b * 10", variableValues));
-		assertEquals(500.0, calculation("(a + (b / 3)) * 100", variableValues));
-		assertEquals(250.0, calculation("(a + (b / 3)) * 100/simpleDouble", variableValues));
-		assertEquals(450.0, calculation("(a + (b / 3))+c0mpl3xDouble * 100/simpleDouble", variableValues));
-		assertEquals(512.0,
-				calculation(" ( _$c0mpl3xDouble+ a ) * (b - 5)-c0mpl3xDouble *( 10+simpleDouble) ", variableValues));
-	}
-
-	@Test
-	void calculationIllegalTest() {
-		Map<String, Double> variableValues = new HashMap<>();
-		variableValues.put("a", 5.0);
-		variableValues.put("b", 10.0);
-		variableValues.put("1a", 2.0);
-		assertThrows(IllegalArgumentException.class, () -> calculation("1+b)+10", variableValues),
-				"Wrong arithmetic expresion syntax");
-		assertThrows(IllegalArgumentException.class, () -> calculation("1+1a", variableValues),
-				"Wrong arithmetic expresion syntax");
-		assertThrows(IllegalArgumentException.class, () -> calculation("1+value", variableValues),
-				"Variable is not defined");
-		assertThrows(IllegalArgumentException.class, () -> calculation("Vasilij Pupkin", variableValues),
-				"Wrong arithmetic expresion syntax");
+	void calculationExpressionTest() {
+		Map<String, Double> variables = new HashMap<>();
+		variables.put("a", -3.5);
+		variables.put("b", 5.5);
+		assertEquals(0, calculation("(a + (b /2) ) * 100 - 100", variables));
+		assertThrowsExactly(IllegalArgumentException.class, () -> calculation("(a + (b /2) ) * 100 & 100", variables),
+				WRONG_EXPRESSION);
+		assertThrowsExactly(IllegalArgumentException.class, () -> calculation("(a + (b /2) ) * 100 - c", variables),
+				VARIABLE_NOT_DEFINED);
+		assertEquals(Double.POSITIVE_INFINITY, calculation("20 / 0 + a", variables));
+		assertEquals(Double.NEGATIVE_INFINITY, calculation("a - b / 0 + 7", variables));
 	}
 
 }
